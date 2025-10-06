@@ -10,8 +10,8 @@
       "name": "default",
       "displayName": "Default Config",
       "description": "Default build using Ninja Multi-Config generator",
-      "generator": "Ninja Multi-Config",
-      "binaryDir": "${sourceDir}/build",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
