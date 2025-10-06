@@ -1,0 +1,45 @@
+name: Build
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build with kdocker
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/kodezine/kdocker:v1.0.2
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Configure CMake
+      run: cmake --preset debug
+
+    - name: Build Debug
+      if: matrix.build_type == 'Debug'
+      run: cmake --build --preset debug
+
+    - name: Build Release
+      if: matrix.build_type == 'Release'
+      run: cmake --build --preset release
+
+    - name: Run Hello World (Unix)
+      if: runner.os != 'Windows'
+      run: ./build/${{ matrix.build_type }}/hello_world
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: hello_world-${{ matrix.build_type }}
+        path: |
+          build/${{ matrix.build_type }}/hello_world*
