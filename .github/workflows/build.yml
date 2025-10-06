@@ -23,15 +23,10 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Configure CMake
-      run: cmake --preset debug
+      run: cmake --preset ${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
 
-    - name: Build Debug
-      if: matrix.build_type == 'Debug'
-      run: cmake --build --preset debug
-
-    - name: Build Release
-      if: matrix.build_type == 'Release'
-      run: cmake --build --preset release
+    - name: Build
+      run: cmake --build --preset ${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
 
     - name: Run Hello World (Unix)
       if: runner.os != 'Windows'
