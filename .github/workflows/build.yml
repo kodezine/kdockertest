@@ -16,17 +16,17 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build_type: [Debug, Release]
+        build_type: [debug, release]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Configure CMake
-      run: cmake --preset ${{ matrix.build_type == 'Debug' && 'debug' || 'Release' && 'release' }}
+      run: cmake --preset ${{ matrix.build_type == 'debug' || 'release' }}
 
     - name: Build
-      run: cmake --build --preset ${{ matrix.build_type == 'Debug' && 'debug' || 'Release' && 'release' }}
+      run: cmake --build --preset ${{ matrix.build_type == 'debug' || 'release' }}
 
     - name: Run Hello World (Unix)
       if: runner.os != 'Windows'
