@@ -1,0 +1,43 @@
+{
+  "name": "C++ CMake Development",
+  "image": "ghcr.io/kodezine/kdocker:v1.0.3",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "kdev",
+      "userUid": "1001",
+      "userGid": "1001"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "cmake.configureOnOpen": false,
+        "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+        "cmake.generator": "Ninja"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "jeff-hykin.better-cpp-syntax",
+        "ms-vscode.makefile-tools"
+      ]
+    }
+  },
+
+  "remoteUser": "kdev",
+
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/kdev/.ssh,type=bind,consistency=cached"
+  ]
+}
